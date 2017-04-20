@@ -41,6 +41,7 @@ export class ThingsDiagramComponent implements OnInit {
   }
 
   applyNodeRules(nodes: any) {
+
     for (let node of nodes) {
 
       let nodeId = '#' + node.data.id;      
@@ -48,8 +49,9 @@ export class ThingsDiagramComponent implements OnInit {
       this.thingsDiagramContainer.on('click', nodeId, node.clickEvent);
 
       this.thingsDiagramContainer.style().resetToDefault().selector(nodeId).css(node.style).update();
-      
+
     }
+    
   }
 
 }
