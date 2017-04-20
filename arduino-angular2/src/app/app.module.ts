@@ -5,16 +5,20 @@ import { HttpModule } from '@angular/http';
 import { MaterializeModule } from 'angular2-materialize';
 
 import { AppComponent } from './app.component';
+import { IotDashboardComponent } from './pages/iot-dashboard/iot-dashboard.component';
+import { routing } from "app/app.routes";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    IotDashboardComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    MaterializeModule 
+    MaterializeModule,
+    routing
   ],
   providers: [],
   bootstrap: [AppComponent]
