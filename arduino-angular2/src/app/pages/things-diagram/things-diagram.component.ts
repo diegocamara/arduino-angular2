@@ -32,8 +32,7 @@ export class ThingsDiagramComponent implements OnInit {
       container: document.getElementById('things-diagram'),
       elements: {
         nodes: nodes
-      },
-      style: cytoscape.stylesheet().selector('node').css()
+      }
     });
 
     this.applyNodeRules(nodes);
