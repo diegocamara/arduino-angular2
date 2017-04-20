@@ -8,12 +8,14 @@ import { AppComponent } from './app.component';
 import { IotDashboardComponent } from './pages/iot-dashboard/iot-dashboard.component';
 import { routing } from "app/app.routes";
 import { ThingsDiagramComponent } from './pages/things-diagram/things-diagram.component';
+import { MicroControllerService } from "app/services/micro-controller.service";
+import { ComponentSensorService } from "app/services/component-sensor.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     IotDashboardComponent,
-    ThingsDiagramComponent   
+    ThingsDiagramComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +24,7 @@ import { ThingsDiagramComponent } from './pages/things-diagram/things-diagram.co
     MaterializeModule,
     routing
   ],
-  providers: [],
+  providers: [MicroControllerService, ComponentSensorService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
