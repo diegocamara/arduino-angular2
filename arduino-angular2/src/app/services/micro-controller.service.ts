@@ -54,14 +54,22 @@ export class MicroControllerService {
         },
         style: {
           'shape': 'rectangle',
-          'content': '',
-          'width': '80px',
-          'height': '40px',
-          'background-color': '#F5A45D',
-          'color': '#fff',
-          'text-outline-width': 1,
-          'text-outline-color': '#F5A45D',
-          'text-valign': 'center'
+          'width': '330',
+          'height': '411',
+          'background-fit': 'cover',
+          'background-image': 'assets/images/esp12f.png'
+        }
+      },
+      {
+        data: { id: 'RaspberryPi' },
+        onClickComplete: function (tbodyComponent) {
+
+        },
+        style: {
+          'shape': 'rectangle',
+          'width': '924',
+          'height': '690',
+          'background-image': 'assets/images/raspberrypi3.png'
         }
       }
       ]
@@ -69,7 +77,37 @@ export class MicroControllerService {
       observer.next(nodes);
       observer.complete();
 
+    }
+    );
+  }
+
+  getDiagramEdges(): Observable<any> {
+
+    return new Observable((observer) => {
+
+      let edges = [
+        {
+          data: {id: 'NodeMcuToRaspberryPi_edge', source: 'NodeMcu', target: 'RaspberryPi' },
+          style: {
+            'curve-style': 'bezier',
+            'target-arrow-shape': 'triangle'
+          }
+        },
+        {
+          data: {id: 'RaspberryPiToNodeMcu_edge', source: 'RaspberryPi', target: 'NodeMcu' },
+          style: {
+            'curve-style': 'bezier',
+            'target-arrow-shape': 'triangle'
+          }
+        }
+        
+      ];
+
+      observer.next(edges);
+      observer.complete();
+
     });
+
   }
 
 }

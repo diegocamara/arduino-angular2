@@ -25,6 +25,14 @@ export class ThingsDiagramComponent implements OnInit {
 
       this.configureDiagram(nodes);
 
+      this.microControllerService.getDiagramEdges().subscribe((edges)=>{
+        
+        this.thingsDiagramContainer.add({edges: edges});
+        this.applyEdgeRules(edges);
+       
+
+      });
+     
     });
 
     $('#node-modal').modal();
@@ -43,7 +51,7 @@ export class ThingsDiagramComponent implements OnInit {
 
   }
 
-  applyNodeRules(nodes: any) {
+  applyNodeRules(nodes: Array<any>) {
 
     for (let node of nodes) {
 
@@ -60,6 +68,18 @@ export class ThingsDiagramComponent implements OnInit {
       });
 
       this.thingsDiagramContainer.style().resetToDefault().selector(nodeId).css(node.style).update();
+
+    }
+
+  }
+
+  applyEdgeRules(edges: Array<any>){
+
+    for(let edge of edges){
+
+      let edgeId = '#' + edge.data.id;     
+
+      this.thingsDiagramContainer.style().resetToDefault().selector(edgeId).css(edge.style).update();
 
     }
 
