@@ -34,19 +34,32 @@ export class MicroControllerService {
                 On
               </label>
             </div>
+            </td>             
+          </tr>
+          <tr>
+            <td>Bathroom light</td>
+            <td class="right-align">
+              <div class="switch">
+              <label>
+                Off
+                <input type="checkbox">
+                <span class="lever"></span>
+                On
+              </label>
+            </div>
+            </td>             
+          </tr>
+          <tr>
+            <td>Temperature sensor</td>
+            <td class="right-align">
+              <i class="fa fa-thermometer-three-quarters fa-2x" aria-hidden="true"></i>
             </td>
-             <tr>
-              <td>Temperature sensor</td>
-              <td class="right-align">
-                <i class="fa fa-thermometer-three-quarters fa-2x" aria-hidden="true"></i>
-              </td>
-             </tr>
-             <tr>
-              <td>Light Intensity</td>
-              <td class="right-align">
-                <i class="fa fa-lightbulb-o fa-2x" aria-hidden="true"></i>
-              </td>
-             </tr>
+          </tr>
+          <tr>
+            <td>Light Intensity</td>
+            <td class="right-align">
+              <i class="fa fa-lightbulb-o fa-2x" aria-hidden="true"></i>
+            </td>
           </tr>`;
 
           tbodyComponent.append(lightHtml);
@@ -87,20 +100,20 @@ export class MicroControllerService {
 
       let edges = [
         {
-          data: {id: 'NodeMcuToRaspberryPi_edge', source: 'NodeMcu', target: 'RaspberryPi' },
+          data: { id: 'NodeMcuToRaspberryPi_edge', source: 'NodeMcu', target: 'RaspberryPi' },
           style: {
             'curve-style': 'bezier',
             'target-arrow-shape': 'triangle'
           }
         },
         {
-          data: {id: 'RaspberryPiToNodeMcu_edge', source: 'RaspberryPi', target: 'NodeMcu' },
+          data: { id: 'RaspberryPiToNodeMcu_edge', source: 'RaspberryPi', target: 'NodeMcu' },
           style: {
             'curve-style': 'bezier',
             'target-arrow-shape': 'triangle'
           }
         }
-        
+
       ];
 
       observer.next(edges);

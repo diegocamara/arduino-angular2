@@ -1,0 +1,7 @@
+linux
+cd {project_root}/node_modules
+ln -s ../lib _
+
+windows
+cd {project_root}/node_modules
+mklink /D _ ..\lib

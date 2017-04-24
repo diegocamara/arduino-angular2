@@ -1,0 +1,32 @@
+{
+  "development": {
+    "dialect": "mongodb",
+    "storage": "mongodb://calzoneuser:calzone2017@ds139909.mlab.com:39909/calzonedb",
+    "options":{
+      "server":{"socketOptions": { "keepAlive": 300000, "connectTimeoutMS": 30000 } },
+      "replset":{ "socketOptions": { "keepAlive": 300000, "connectTimeoutMS" : 30000 } }
+    }
+  },
+  "test":{
+    "username": "root",
+    "password": "1234567",
+    "database": "productdeliverydb",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "production":{
+    "username": "root",
+    "password": "1234567",
+    "database": "productdeliverydb",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "localhost":{
+    "dialect": "mongodb",
+    "storage": "mongodb://localhost:27017/calzonedb",
+    "options":{
+      "server":{"socketOptions": { "keepAlive": 300000, "connectTimeoutMS": 30000 } },
+      "replset":{ "socketOptions": { "keepAlive": 300000, "connectTimeoutMS" : 30000 } }
+    }
+  }
+}
