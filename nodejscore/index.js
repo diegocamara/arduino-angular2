@@ -2,9 +2,10 @@ var cfg = require('_/config');
 var log = require('_/log');
 var models = require('_/app/models');
 var app = require('_/app');
+var Raspi = require('raspi-io');
 var five = require('johnny-five');
 var Robot = require('./robotjs/robot/robot');
-var board = new five.Board({ repl: false });
+var board = new five.Board({ repl: false, io: new Raspi() });
 var mqtt = require('mqtt');
 /*
 models.mongoose.connection.on('error', console.error.bind(console, 'Connection error:'));
