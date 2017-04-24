@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import * as cytoscape from 'cytoscape';
 import { MicroControllerService } from "app/services/micro-controller.service";
 
+declare var $: any;
+
 @Component({
   selector: 'app-things-diagram',
   templateUrl: './things-diagram.component.html',
@@ -25,6 +27,8 @@ export class ThingsDiagramComponent implements OnInit {
 
     });
 
+    $('#node-modal').modal();
+
   }
 
   configureDiagram(nodes: any) {
@@ -43,14 +47,22 @@ export class ThingsDiagramComponent implements OnInit {
 
     for (let node of nodes) {
 
-      let nodeId = '#' + node.data.id;      
+      let nodeId = '#' + node.data.id;
 
-      this.thingsDiagramContainer.on('click', nodeId, node.clickEvent);
+      this.thingsDiagramContainer.on('click', nodeId, (e) => {
+
+        $('#modules-table tbody').html('');
+
+        $('#node-modal-title').html(node.data.id);
+        $('#node-modal').modal('open');
+        
+        node.onClickComplete($('#modules-table tbody'));
+      });
 
       this.thingsDiagramContainer.style().resetToDefault().selector(nodeId).css(node.style).update();
 
     }
-    
+
   }
 
 }
