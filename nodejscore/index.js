@@ -51,7 +51,7 @@ app.listen(cfg.port, function () {
     console.log('System looking for compatible hardware.');
     board.on('ready', function () {
         console.log('Hardware ready!.');
-        robot.initSystem();
+        //robot.initSystem();
     });
 
 });
