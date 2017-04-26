@@ -62,9 +62,62 @@ export class MicroControllerService {
             </td>
           </tr>`;
 
-          tbodyComponent.append(lightHtml);
+          //tbodyComponent.append(lightHtml);
           
         },
+        html: `
+        
+        <h4 id="node-modal-title">{{componentTitle}}</h4>
+        <table id="modules-table">
+            <thead>
+                <tr>
+                    <th>
+                        Module description
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                 <tr>
+            <td>Bedroom light</td>
+            <td class="right-align">
+              <div class="switch">
+              <label>
+                Off
+                <input type="checkbox">
+                <span class="lever"></span>
+                On
+              </label>
+            </div>
+            </td>             
+          </tr>
+          <tr>
+            <td>Bathroom light</td>
+            <td class="right-align">
+              <div class="switch">
+              <label>
+                Off
+                <input type="checkbox">
+                <span class="lever"></span>
+                On
+              </label>
+            </div>
+            </td>             
+          </tr>
+          <tr>
+            <td>Temperature sensor</td>
+            <td class="right-align">
+              <i class="fa fa-thermometer-three-quarters fa-2x" aria-hidden="true"></i>
+            </td>
+          </tr>
+          <tr>
+            <td>Light Intensity</td>
+            <td class="right-align">
+              <i class="fa fa-lightbulb-o fa-2x" aria-hidden="true"></i>              
+            </td>
+          </tr>
+            </tbody>
+        </table>        
+        `,
         style: {
           'shape': 'rectangle',
           'width': '330',
@@ -78,6 +131,7 @@ export class MicroControllerService {
         onClickComplete: function (tbodyComponent) {
          
         },
+        html: ``,
         style: {
           'shape': 'rectangle',
           'width': '924',

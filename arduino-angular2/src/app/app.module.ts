@@ -14,13 +14,18 @@ import { WebsocketService } from 'app/services/websocket.service';
 import { BrokerTopicsComponent } from './pages/broker-topics/broker-topics.component';
 import { HttpInterceptorService } from "app/services/http-interceptor.service";
 import { BrokerTopicsService } from "app/services/broker-topics.service";
+import { DynamicComponent } from './pages/dynamic/dynamic.component';
+import { HtmlOutlet } from "app/directives/html-outlet";
+
 
 @NgModule({
   declarations: [
     AppComponent,
     IotDashboardComponent,
     ThingsDiagramComponent,
-    BrokerTopicsComponent
+    BrokerTopicsComponent,
+    DynamicComponent,
+    HtmlOutlet
   ],
   imports: [
     BrowserModule,
@@ -30,6 +35,7 @@ import { BrokerTopicsService } from "app/services/broker-topics.service";
     routing
   ],
   providers: [MicroControllerService, ComponentSensorService, WebsocketService, HttpInterceptorService, BrokerTopicsService],
+  entryComponents:[DynamicComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -3,19 +3,7 @@
 </div>
 <div id="node-modal" class="modal">
     <div class="modal-content">
-        <h4 id="node-modal-title"></h4>                  
-        <table id="modules-table">
-            <thead>
-                <tr>
-                    <th>
-                        Module description
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                
-            </tbody>
-        </table>     
+        <html-outlet [html]="modalHtml"></html-outlet>
     </div>
     <div class="modal-footer">
 

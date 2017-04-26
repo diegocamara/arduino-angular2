@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, ElementRef, ComponentFactoryResolver, ComponentRef, ReflectiveInjector } from '@angular/core';
 import * as cytoscape from 'cytoscape';
 import { MicroControllerService } from "app/services/micro-controller.service";
 import { WebsocketService } from "app/services/websocket.service";
+import { DynamicComponent } from "app/pages/dynamic/dynamic.component";
 
 declare var $: any;
 
@@ -12,15 +13,18 @@ declare var $: any;
 })
 export class ThingsDiagramComponent implements OnInit {
 
-  thingsDiagramContainer: any;  
+  modalHtml: String;
+
+  thingsDiagramContainer: any;
 
   constructor(
+    private componentFactoryResolver: ComponentFactoryResolver,
     private microControllerService: MicroControllerService
   ) {
   }
 
   ngOnInit() {
-
+        
     this.microControllerService.getDiagramNodes().subscribe((nodes) => {
 
       this.configureDiagram(nodes);
@@ -38,7 +42,7 @@ export class ThingsDiagramComponent implements OnInit {
     $('#node-modal').modal();
 
   }
-
+  
   configureDiagram(nodes: any) {
     this.thingsDiagramContainer = cytoscape({
       container: document.getElementById('things-diagram'),
@@ -58,13 +62,13 @@ export class ThingsDiagramComponent implements OnInit {
       let nodeId = '#' + node.data.id;
 
       this.thingsDiagramContainer.on('click', nodeId, (e) => {
+        this.modalHtml = node.html;
+        //$('#modules-table tbody').html('');
 
-        $('#modules-table tbody').html('');
-
-        $('#node-modal-title').html(node.data.id);
+        //$('#node-modal-title').html(node.data.id);
         $('#node-modal').modal('open');
 
-        node.onClickComplete($('#modules-table tbody'));
+        //node.onClickComplete($('#modules-table tbody'));
       });
 
       this.thingsDiagramContainer.style().resetToDefault().selector(nodeId).css(node.style).update();
