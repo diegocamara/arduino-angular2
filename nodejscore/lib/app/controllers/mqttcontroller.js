@@ -17,10 +17,10 @@ exports.mqttConnectInit = function (onMessageCallback) {
 
             topic = topic.toString().replace('/', '');
 
-            if (!isExistsComponent(topic)) {
+            
                 console.log('Topic', topic.toString(), 'has been added to the components map.');
                 componentsMap[topic] = {message: JSON.parse(message.toString())};
-            }           
+                     
 
             onMessageCallback(componentsMap); 
 
@@ -29,6 +29,12 @@ exports.mqttConnectInit = function (onMessageCallback) {
     });
 
 };
+
+exports.consultRegisteredTopics = function(req, res, next){
+
+    res.send(JSON.stringify(componentsMap));
+
+}
 
 function isExistsComponent(topic) {
     return Object.keys(componentsMap).length > 0 && componentsMap.hasOwnProperty(topic);

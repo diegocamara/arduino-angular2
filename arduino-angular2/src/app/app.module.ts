@@ -12,12 +12,14 @@ import { MicroControllerService } from 'app/services/micro-controller.service';
 import { ComponentSensorService } from 'app/services/component-sensor.service';
 import { WebsocketService } from 'app/services/websocket.service';
 import { BrokerTopicsComponent } from './pages/broker-topics/broker-topics.component';
+import { HttpInterceptorService } from "app/services/http-interceptor.service";
+import { BrokerTopicsService } from "app/services/broker-topics.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     IotDashboardComponent,
-    ThingsDiagramComponent,    
+    ThingsDiagramComponent,
     BrokerTopicsComponent
   ],
   imports: [
@@ -27,7 +29,7 @@ import { BrokerTopicsComponent } from './pages/broker-topics/broker-topics.compo
     MaterializeModule,
     routing
   ],
-  providers: [MicroControllerService, ComponentSensorService, WebsocketService],
+  providers: [MicroControllerService, ComponentSensorService, WebsocketService, HttpInterceptorService, BrokerTopicsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -12,7 +12,7 @@ declare var $: any;
 })
 export class ThingsDiagramComponent implements OnInit {
 
-  thingsDiagramContainer: any;
+  thingsDiagramContainer: any;  
 
   constructor(
     private microControllerService: MicroControllerService

@@ -5,4 +5,8 @@ var controllers = require('./controllers');
 var routes = require('./routes.json');
 var multer = require('multer');
 
+var mqttController = controllers.mqttController;
+
+router.get(routes.GET_REGISTERED_TOPICS, mqttController.consultRegisteredTopics);
+
 module.exports = router;
