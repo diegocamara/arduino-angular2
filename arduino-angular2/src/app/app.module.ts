@@ -6,16 +6,19 @@ import { MaterializeModule } from 'angular2-materialize';
 
 import { AppComponent } from './app.component';
 import { IotDashboardComponent } from './pages/iot-dashboard/iot-dashboard.component';
-import { routing } from "app/app.routes";
+import { routing } from 'app/app.routes';
 import { ThingsDiagramComponent } from './pages/things-diagram/things-diagram.component';
-import { MicroControllerService } from "app/services/micro-controller.service";
-import { ComponentSensorService } from "app/services/component-sensor.service";
+import { MicroControllerService } from 'app/services/micro-controller.service';
+import { ComponentSensorService } from 'app/services/component-sensor.service';
+import { WebsocketService } from 'app/services/websocket.service';
+import { BrokerTopicsComponent } from './pages/broker-topics/broker-topics.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     IotDashboardComponent,
-    ThingsDiagramComponent
+    ThingsDiagramComponent,    
+    BrokerTopicsComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +27,7 @@ import { ComponentSensorService } from "app/services/component-sensor.service";
     MaterializeModule,
     routing
   ],
-  providers: [MicroControllerService, ComponentSensorService],
+  providers: [MicroControllerService, ComponentSensorService, WebsocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

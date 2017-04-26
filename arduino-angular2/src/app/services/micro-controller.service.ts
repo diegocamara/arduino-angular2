@@ -76,7 +76,7 @@ export class MicroControllerService {
       {
         data: { id: 'RaspberryPi' },
         onClickComplete: function (tbodyComponent) {
-
+         
         },
         style: {
           'shape': 'rectangle',

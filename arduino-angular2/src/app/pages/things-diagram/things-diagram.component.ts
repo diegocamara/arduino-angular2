@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as cytoscape from 'cytoscape';
 import { MicroControllerService } from "app/services/micro-controller.service";
+import { WebsocketService } from "app/services/websocket.service";
 
 declare var $: any;
 
@@ -25,14 +26,14 @@ export class ThingsDiagramComponent implements OnInit {
 
       this.configureDiagram(nodes);
 
-      this.microControllerService.getDiagramEdges().subscribe((edges)=>{
-        
-        this.thingsDiagramContainer.add({edges: edges});
+      this.microControllerService.getDiagramEdges().subscribe((edges) => {
+
+        this.thingsDiagramContainer.add({ edges: edges });
         this.applyEdgeRules(edges);
-       
+
 
       });
-     
+
     });
 
     $('#node-modal').modal();
@@ -63,7 +64,7 @@ export class ThingsDiagramComponent implements OnInit {
 
         $('#node-modal-title').html(node.data.id);
         $('#node-modal').modal('open');
-        
+
         node.onClickComplete($('#modules-table tbody'));
       });
 
@@ -73,11 +74,11 @@ export class ThingsDiagramComponent implements OnInit {
 
   }
 
-  applyEdgeRules(edges: Array<any>){
+  applyEdgeRules(edges: Array<any>) {
 
-    for(let edge of edges){
+    for (let edge of edges) {
 
-      let edgeId = '#' + edge.data.id;     
+      let edgeId = '#' + edge.data.id;
 
       this.thingsDiagramContainer.style().resetToDefault().selector(edgeId).css(edge.style).update();
 

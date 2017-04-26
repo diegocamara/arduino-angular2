@@ -3,11 +3,13 @@ var log = require('_/log');
 var models = require('_/app/models');
 var app = require('_/app');
 var mqttController = require('_/app/controllers').mqttController;
+var mqtt = require('mqtt');
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
 //var Raspi = require('raspi-io');
 //var five = require('johnny-five');
 //var Robot = require('./robotjs/robot/robot');
 //var board = new five.Board({ repl: false });
-var mqtt = require('mqtt');
 /*
 models.mongoose.connection.on('error', console.error.bind(console, 'Connection error:'));
 
@@ -32,12 +34,16 @@ var robot = new Robot({
 }, board);
 */
 
-app.listen(cfg.port, function () {
+io.on('connection', function(client){  
+
+});
+
+server.listen(cfg.port, function () {
 
     console.log('App listening on port', cfg.port);
 
-    mqttController.mqttConnectInit(function(){
-        
+    mqttController.mqttConnectInit(function(componentsMap){       
+        io.clients().emit('topicregistered', componentsMap);
     });
     
 

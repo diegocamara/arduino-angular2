@@ -3,7 +3,7 @@ var brokerUrl = 'mqtt://localhost';
 
 var componentsMap = {};
 
-exports.mqttConnectInit = function (callback) {
+exports.mqttConnectInit = function (onMessageCallback) {
 
     var mqttClient = mqtt.connect(brokerUrl);
 
@@ -20,8 +20,9 @@ exports.mqttConnectInit = function (callback) {
             if (!isExistsComponent(topic)) {
                 console.log('Topic', topic.toString(), 'has been added to the components map.');
                 componentsMap[topic] = {message: JSON.parse(message.toString())};
+            }           
 
-            }            
+            onMessageCallback(componentsMap); 
 
         });
 
