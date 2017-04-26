@@ -17,7 +17,6 @@ export class ThingsDiagramComponent implements OnInit {
   constructor(
     private microControllerService: MicroControllerService
   ) {
-
   }
 
   ngOnInit() {

@@ -63,7 +63,7 @@ export class MicroControllerService {
           </tr>`;
 
           tbodyComponent.append(lightHtml);
-
+          
         },
         style: {
           'shape': 'rectangle',
