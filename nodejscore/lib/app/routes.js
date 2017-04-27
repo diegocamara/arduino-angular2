@@ -9,4 +9,6 @@ var mqttController = controllers.mqttController;
 
 router.get(routes.GET_REGISTERED_TOPICS, mqttController.consultRegisteredTopics);
 
+router.get(routes.GET_MICROCONTROLLER_INFO, mqttController.consultMicrocontrollerInfo);
+
 module.exports = router;

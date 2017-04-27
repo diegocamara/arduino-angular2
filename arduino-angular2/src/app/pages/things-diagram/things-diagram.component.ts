@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, ViewContainerRef, ElementRef, ComponentFactoryResolver, ComponentRef, ReflectiveInjector } from '@angular/core';
 import * as cytoscape from 'cytoscape';
 import { MicroControllerService } from "app/services/micro-controller.service";
-import { WebsocketService } from "app/services/websocket.service";
 import { DynamicComponent } from "app/pages/dynamic/dynamic.component";
 
 declare var $: any;
@@ -62,13 +61,15 @@ export class ThingsDiagramComponent implements OnInit {
       let nodeId = '#' + node.data.id;
 
       this.thingsDiagramContainer.on('click', nodeId, (e) => {
+        
+        this.microControllerService.listenMicrocontrollerInformations(node.data.id).subscribe((nodeInfo)=>{
+          console.log(nodeInfo);
+        });
+
         this.modalHtml = node.html;
-        //$('#modules-table tbody').html('');
-
-        //$('#node-modal-title').html(node.data.id);
+        
         $('#node-modal').modal('open');
-
-        //node.onClickComplete($('#modules-table tbody'));
+        
       });
 
       this.thingsDiagramContainer.style().resetToDefault().selector(nodeId).css(node.style).update();

@@ -15,11 +15,10 @@ exports.mqttConnectInit = function (onMessageCallback) {
 
         mqttClient.on('message', function (topic, message) {
 
-            topic = topic.toString().replace('/', '');
-
+            topic = topic.toString().replace(new RegExp('/', 'g'), '');
             
                 console.log('Topic', topic.toString(), 'has been added to the components map.');
-                componentsMap[topic] = {message: JSON.parse(message.toString())};
+                componentsMap[topic] = JSON.parse(message.toString());
                      
 
             onMessageCallback(componentsMap); 
@@ -33,6 +32,15 @@ exports.mqttConnectInit = function (onMessageCallback) {
 exports.consultRegisteredTopics = function(req, res, next){
 
     res.send(JSON.stringify(componentsMap));
+
+}
+
+exports.consultMicrocontrollerInfo = function(req, res, next){
+
+    var microcontrollerId = req.query.microcontrollerId;
+        
+    res.send(componentsMap);
+    
 
 }
 

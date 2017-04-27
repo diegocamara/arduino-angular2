@@ -1,5 +1,6 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { WebsocketService } from "app/services/websocket.service";
 
 @Component({
   selector: 'app-iot-dashboard',
@@ -9,7 +10,8 @@ import { Component, OnInit } from '@angular/core';
 export class IotDashboardComponent implements OnInit {
 
   constructor(
-    private router: Router
+    private router: Router,
+    private websocketService: WebsocketService
   ) {
   }
 

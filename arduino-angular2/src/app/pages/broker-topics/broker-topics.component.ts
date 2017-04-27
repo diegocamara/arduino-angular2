@@ -18,7 +18,7 @@ export class BrokerTopicsComponent implements OnInit {
 
   ngOnInit() {
 
-    this.brokerTopicsService.consultRegisteredTopics().subscribe((registeredTopics)=>{     
+    this.brokerTopicsService.consultRegisteredTopics().subscribe((registeredTopics)=>{       
       this.topics = this.componentsToArray(registeredTopics);
     });
 

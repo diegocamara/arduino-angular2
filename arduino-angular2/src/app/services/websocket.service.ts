@@ -7,14 +7,14 @@ export class WebsocketService {
 
   onTopicRegistered: any;
 
+  private _socket: any;
+
   constructor() {
 
-    let socket = io('http://localhost:3000');
+    this._socket = io('http://localhost:3000');
 
-
-
-    socket.on('topicregistered', (data) => {
-
+    this._socket.on('topicregistered', (data) => {
+      console.log(data);
       if (this.onTopicRegistered) {
         this.onTopicRegistered(data);
       }
@@ -35,5 +35,9 @@ export class WebsocketService {
     }
 
   }
+
+  public get socket() {
+    return this._socket;
+  }  
 
 }

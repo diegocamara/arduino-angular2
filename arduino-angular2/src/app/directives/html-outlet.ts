@@ -34,11 +34,12 @@ export class HtmlOutlet {
 
     constructor(private vcRef: ViewContainerRef, private compiler: Compiler) { }
 
-    ngOnChanges() {
+    ngOnChanges() {       
         const html = this.html;
-        if (!html) return;
 
-        if (this.cmpRef) {
+        if (!html) return;        
+
+        if (this.cmpRef) {           
             this.cmpRef.destroy();
         }
 
@@ -48,7 +49,7 @@ export class HtmlOutlet {
         });
 
         createComponentFactory(this.compiler, compMetadata)
-            .then(factory => {
+            .then(factory => {                
                 const injector = ReflectiveInjector.fromResolvedProviders([], this.vcRef.parentInjector);
                 this.cmpRef = this.vcRef.createComponent(factory, 0, injector, []);
             });

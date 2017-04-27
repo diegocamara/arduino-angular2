@@ -1,6 +1,9 @@
+import { WebsocketService } from './websocket.service';
 import { Injectable } from '@angular/core';
+import { URLSearchParams } from '@angular/http';
 import { ComponentSensorService } from "app/services/component-sensor.service";
 import { Observable } from "rxjs/Observable";
+import { HttpInterceptorService } from "app/services/http-interceptor.service";
 
 declare var $: any;
 
@@ -8,9 +11,48 @@ declare var $: any;
 export class MicroControllerService {
 
   constructor(
-    private componentSensorService: ComponentSensorService
+    private componentSensorService: ComponentSensorService,
+    private httpInterceptorService: HttpInterceptorService,
+    private websocketService: WebsocketService
   ) {
 
+  }
+
+  public listenMicrocontrollerInformations(microcontrollerId: string): Observable<any> {
+
+    return new Observable((observer) => {
+
+      let url = 'getmicrocontrollerinfo';
+
+      let params: URLSearchParams = new URLSearchParams();
+      params.set('microcontrollerId', microcontrollerId);
+      
+      this.httpInterceptorService.get(url, { search: params }).subscribe((microcontrollerInfo) => {
+
+        observer.next(microcontrollerInfo.json());
+
+        this.onSocket('microcontrollerupdate').subscribe((updatedInfo) => {
+
+          observer.next(updatedInfo);
+
+        });
+
+      });
+
+    });
+
+  }
+
+  public onSocket(socketEvent: String): Observable<any> {
+    return new Observable((observer) => {
+
+      this.websocketService.socket.on(socketEvent, (data) => {
+
+        observer.next(data);
+
+      });
+
+    });
   }
 
   public getDiagramNodes(): Observable<any> {
@@ -19,51 +61,9 @@ export class MicroControllerService {
       let nodes = [];
 
       nodes = [{
-        data: { id: 'NodeMcu' },
+        data: { id: 'NodeMcu', info: {} },
         onClickComplete: function (tbodyComponent) {
 
-          let lightHtml = `
-          <tr>
-            <td>Bedroom light</td>
-            <td class="right-align">
-              <div class="switch">
-              <label>
-                Off
-                <input type="checkbox">
-                <span class="lever"></span>
-                On
-              </label>
-            </div>
-            </td>             
-          </tr>
-          <tr>
-            <td>Bathroom light</td>
-            <td class="right-align">
-              <div class="switch">
-              <label>
-                Off
-                <input type="checkbox">
-                <span class="lever"></span>
-                On
-              </label>
-            </div>
-            </td>             
-          </tr>
-          <tr>
-            <td>Temperature sensor</td>
-            <td class="right-align">
-              <i class="fa fa-thermometer-three-quarters fa-2x" aria-hidden="true"></i>
-            </td>
-          </tr>
-          <tr>
-            <td>Light Intensity</td>
-            <td class="right-align">
-              <i class="fa fa-lightbulb-o fa-2x" aria-hidden="true"></i>
-            </td>
-          </tr>`;
-
-          //tbodyComponent.append(lightHtml);
-          
         },
         html: `
         
@@ -129,9 +129,9 @@ export class MicroControllerService {
       {
         data: { id: 'RaspberryPi' },
         onClickComplete: function (tbodyComponent) {
-         
+
         },
-        html: ``,
+        html: `<div></div>`,
         style: {
           'shape': 'rectangle',
           'width': '924',
