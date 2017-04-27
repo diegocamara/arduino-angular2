@@ -3,6 +3,7 @@ import { IotDashboardComponent } from "app/pages/iot-dashboard/iot-dashboard.com
 import { ModuleWithProviders } from "@angular/core";
 import { ThingsDiagramComponent } from "app/pages/things-diagram/things-diagram.component";
 import { BrokerTopicsComponent } from "app/pages/broker-topics/broker-topics.component";
+import { NodemcuComponent } from "app/pages/thingscontrollers/nodemcu/nodemcu.component";
 
 const APP_ROUTES: Routes = [
     {
@@ -11,7 +12,13 @@ const APP_ROUTES: Routes = [
         children: [
             {
                 path: 'thingsDiagram',
-                component: ThingsDiagramComponent
+                component: ThingsDiagramComponent,
+                children: [
+                    {
+                        path: 'nodemcu/:id',
+                        component: NodemcuComponent
+                    }
+                ]
             },
             {
                 path: 'brokerTopics',

@@ -16,7 +16,7 @@ import { HttpInterceptorService } from "app/services/http-interceptor.service";
 import { BrokerTopicsService } from "app/services/broker-topics.service";
 import { DynamicComponent } from './pages/dynamic/dynamic.component';
 import { HtmlOutlet } from "app/directives/html-outlet";
-
+import { NodemcuComponent } from './pages/thingscontrollers/nodemcu/nodemcu.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,8 @@ import { HtmlOutlet } from "app/directives/html-outlet";
     ThingsDiagramComponent,
     BrokerTopicsComponent,
     DynamicComponent,
-    HtmlOutlet
+    HtmlOutlet,
+    NodemcuComponent    
   ],
   imports: [
     BrowserModule,

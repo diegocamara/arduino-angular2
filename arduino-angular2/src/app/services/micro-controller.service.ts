@@ -26,15 +26,22 @@ export class MicroControllerService {
 
       let params: URLSearchParams = new URLSearchParams();
       params.set('microcontrollerId', microcontrollerId);
-      
-      this.httpInterceptorService.get(url, { search: params }).subscribe((microcontrollerInfo) => {
 
-        observer.next(microcontrollerInfo.json());
+      this.httpInterceptorService.get(url, { search: params }).subscribe((microcontrollerInfo: any) => {
+
+        if (microcontrollerInfo._body && microcontrollerInfo._body != '') {
+          observer.next(microcontrollerInfo.json());
+        }
+
+        let mqttTopic: string;
+        let clientSocketId: string;
+
+        this.enableTopicWebsocket(mqttTopic, clientSocketId).subscribe(() => {
+
+        });
 
         this.onSocket('microcontrollerupdate').subscribe((updatedInfo) => {
-
           observer.next(updatedInfo);
-
         });
 
       });
@@ -55,6 +62,24 @@ export class MicroControllerService {
     });
   }
 
+  public enableTopicWebsocket(mqttTopic: string, clientSocketId: string): Observable<any> {
+    return new Observable((observer) => {
+
+      let url = 'enabletopicwebsocket';
+
+      let params: URLSearchParams = new URLSearchParams();
+      params.set('mqttTopic', mqttTopic);
+      params.set('clientSocketId', clientSocketId);
+
+      this.httpInterceptorService.get(url, { search: params }).subscribe(() => {
+
+        observer.complete();
+
+      });
+
+    });
+  }
+
   public getDiagramNodes(): Observable<any> {
     return new Observable((observer) => {
 
@@ -62,62 +87,7 @@ export class MicroControllerService {
 
       nodes = [{
         data: { id: 'NodeMcu', info: {} },
-        onClickComplete: function (tbodyComponent) {
-
-        },
-        html: `
-        
-        <h4 id="node-modal-title">{{componentTitle}}</h4>
-        <table id="modules-table">
-            <thead>
-                <tr>
-                    <th>
-                        Module description
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                 <tr>
-            <td>Bedroom light</td>
-            <td class="right-align">
-              <div class="switch">
-              <label>
-                Off
-                <input type="checkbox">
-                <span class="lever"></span>
-                On
-              </label>
-            </div>
-            </td>             
-          </tr>
-          <tr>
-            <td>Bathroom light</td>
-            <td class="right-align">
-              <div class="switch">
-              <label>
-                Off
-                <input type="checkbox">
-                <span class="lever"></span>
-                On
-              </label>
-            </div>
-            </td>             
-          </tr>
-          <tr>
-            <td>Temperature sensor</td>
-            <td class="right-align">
-              <i class="fa fa-thermometer-three-quarters fa-2x" aria-hidden="true"></i>
-            </td>
-          </tr>
-          <tr>
-            <td>Light Intensity</td>
-            <td class="right-align">
-              <i class="fa fa-lightbulb-o fa-2x" aria-hidden="true"></i>              
-            </td>
-          </tr>
-            </tbody>
-        </table>        
-        `,
+        componentPath: 'thingsDiagram/nodemcu',
         style: {
           'shape': 'rectangle',
           'width': '330',
@@ -128,10 +98,7 @@ export class MicroControllerService {
       },
       {
         data: { id: 'RaspberryPi' },
-        onClickComplete: function (tbodyComponent) {
-
-        },
-        html: `<div></div>`,
+        componentPath: 'thingsDiagram/raspberrypi',
         style: {
           'shape': 'rectangle',
           'width': '924',

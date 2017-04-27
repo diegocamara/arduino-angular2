@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit, ViewChild, ViewContainerRef, ElementRef, ComponentFactoryResolver, ComponentRef, ReflectiveInjector } from '@angular/core';
 import * as cytoscape from 'cytoscape';
 import { MicroControllerService } from "app/services/micro-controller.service";
@@ -13,17 +14,19 @@ declare var $: any;
 export class ThingsDiagramComponent implements OnInit {
 
   modalHtml: String;
+  dynamicMicrocontroller: any;
 
   thingsDiagramContainer: any;
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
-    private microControllerService: MicroControllerService
+    private microControllerService: MicroControllerService,
+    private router: Router
   ) {
   }
 
   ngOnInit() {
-        
+
     this.microControllerService.getDiagramNodes().subscribe((nodes) => {
 
       this.configureDiagram(nodes);
@@ -41,7 +44,7 @@ export class ThingsDiagramComponent implements OnInit {
     $('#node-modal').modal();
 
   }
-  
+
   configureDiagram(nodes: any) {
     this.thingsDiagramContainer = cytoscape({
       container: document.getElementById('things-diagram'),
@@ -61,15 +64,10 @@ export class ThingsDiagramComponent implements OnInit {
       let nodeId = '#' + node.data.id;
 
       this.thingsDiagramContainer.on('click', nodeId, (e) => {
-        
-        this.microControllerService.listenMicrocontrollerInformations(node.data.id).subscribe((nodeInfo)=>{
-          console.log(nodeInfo);
-        });
-
-        this.modalHtml = node.html;
-        
+                
         $('#node-modal').modal('open');
-        
+        this.router.navigate([node.componentPath, node.data.id.toString().toLowerCase()]);
+
       });
 
       this.thingsDiagramContainer.style().resetToDefault().selector(nodeId).css(node.style).update();

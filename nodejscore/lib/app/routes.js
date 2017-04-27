@@ -11,4 +11,6 @@ router.get(routes.GET_REGISTERED_TOPICS, mqttController.consultRegisteredTopics)
 
 router.get(routes.GET_MICROCONTROLLER_INFO, mqttController.consultMicrocontrollerInfo);
 
+router.get(routes.ENABLE_TOPIC_WEBSOCKET, mqttController.enableTopicWebsocket);
+
 module.exports = router;
