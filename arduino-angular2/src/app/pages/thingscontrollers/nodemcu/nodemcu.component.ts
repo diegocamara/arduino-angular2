@@ -27,7 +27,7 @@ export class NodemcuComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.microControllerService.listenMicrocontrollerInformations(this.nodemcuId).subscribe((nodeInfo) => {
-      this.nodemcu = nodeInfo;
+      this.nodemcu = nodeInfo;      
     });
 
   }

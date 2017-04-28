@@ -42,11 +42,10 @@ server.listen(cfg.port, function () {
 
     console.log('App listening on port', cfg.port);
 
-    mqttController.mqttConnectInit(function(componentsMap){       
-        io.clients().emit('topicregistered', componentsMap);
+    mqttController.mqttConnectInit(io, function(componentsMap){       
+        //io.clients().emit('topicregistered', componentsMap);
     });
     
-
     /*
     console.log('System looking for compatible hardware.');
     board.on('ready', function () {

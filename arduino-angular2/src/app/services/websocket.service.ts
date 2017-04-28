@@ -14,7 +14,7 @@ export class WebsocketService {
     this._socket = io('http://localhost:3000');
     
     this._socket.on('topicregistered', (data) => {
-      console.log(data);
+     
       if (this.onTopicRegistered) {
         this.onTopicRegistered(data);
       }

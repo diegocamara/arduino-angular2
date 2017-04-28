@@ -33,14 +33,15 @@ export class MicroControllerService {
           observer.next(microcontrollerInfo.json());
         }
 
-        let mqttTopic: string;
-        let clientSocketId: string;
+        let mqttTopic: string = microcontrollerId + '/#';
+        let clientSocketId: string = this.websocketService.socket.io.engine.id;
+        let webSocketEvent: string = 'microcontrollerupdate';
 
-        this.enableTopicWebsocket(mqttTopic, clientSocketId).subscribe(() => {
+        this.enableTopicListener(mqttTopic, clientSocketId, webSocketEvent).subscribe(() => {
 
         });
 
-        this.onSocket('microcontrollerupdate').subscribe((updatedInfo) => {
+        this.onSocket(webSocketEvent).subscribe((updatedInfo) => {
           observer.next(updatedInfo);
         });
 
@@ -62,14 +63,15 @@ export class MicroControllerService {
     });
   }
 
-  public enableTopicWebsocket(mqttTopic: string, clientSocketId: string): Observable<any> {
+  public enableTopicListener(mqttTopic: string, clientSocketId: string, webSocketEvent: string): Observable<any> {
     return new Observable((observer) => {
 
-      let url = 'enabletopicwebsocket';
+      let url = 'enabletopiclistener';
 
       let params: URLSearchParams = new URLSearchParams();
       params.set('mqttTopic', mqttTopic);
       params.set('clientSocketId', clientSocketId);
+      params.set('webSocketEvent', webSocketEvent);      
 
       this.httpInterceptorService.get(url, { search: params }).subscribe(() => {
 

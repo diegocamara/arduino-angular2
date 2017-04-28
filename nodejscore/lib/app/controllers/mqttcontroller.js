@@ -7,7 +7,7 @@ exports.mqttConnectInit = function (socketio, onMessageCallback) {
 
     io = socketio;
 
-    var mqttClient = mqtt.connect(brokerUrl);
+    var mqttClient = new mqtt.connect(brokerUrl);
 
     mqttClient.on('connect', function () {
         console.log('System connect to', brokerUrl);
@@ -40,6 +40,8 @@ exports.mqttConnectInit = function (socketio, onMessageCallback) {
 
             onMessageCallback(componentsMap);
 
+            // mqttClient.end();
+
         });
 
     });
@@ -60,17 +62,24 @@ exports.consultMicrocontrollerInfo = function (req, res, next) {
 
 }
 
-exports.enableTopicWebsocket = function (req, res, next) {
-
-    var topic = req.query.topic;
+exports.enableTopicListener = function (req, res, next) {
+    var topic = req.query.mqttTopic;
     var clientSocketId = req.query.clientSocketId;
+    var webSocketEvent = req.query.webSocketEvent;
 
-    var mqttClient = mqtt.connect(brokerUrl);
+    var mqttClient = new mqtt.connect(brokerUrl);
 
-    mqttClient.subscribe(topic, function(error, granted){
-        console.log('Topic ', topic, ' on mqtt.');
+    mqttClient.on('connect', function () {
 
-       // io.sockets.socket(clientSocketId).emit();
+        mqttClient.subscribe(topic, function (error, granted) {
+            console.log('Topic', topic, 'on mqtt for client', clientSocketId);
+
+            mqttClient.on('message', function (topic, message) {                
+                var messageJson = JSON.parse(message.toString());                
+                io.to(clientSocketId).emit(webSocketEvent, messageJson);                
+            });
+
+        });
 
     });
 
