@@ -1,4 +1,4 @@
-<h4 id="node-modal-title">{{microControllerService.dynamicMicrocontroller}}</h4>
+<h4 id="node-modal-title"></h4>
 <table id="modules-table">
   <thead>
     <tr>
@@ -8,8 +8,8 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>Bedroom light</td>
+    <tr *ngFor="let light of lights">
+      <td>{{light.description}}</td>
       <td class="right-align">
         <div class="switch">
           <label>
@@ -20,20 +20,7 @@
               </label>
         </div>
       </td>
-    </tr>
-    <tr>
-      <td>Bathroom light</td>
-      <td class="right-align">
-        <div class="switch">
-          <label>
-                Off
-                <input type="checkbox">
-                <span class="lever"></span>
-                On
-              </label>
-        </div>
-      </td>
-    </tr>
+    </tr>    
     <tr>
       <td>Temperature sensor</td>
       <td class="right-align">

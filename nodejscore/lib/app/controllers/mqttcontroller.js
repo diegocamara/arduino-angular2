@@ -73,7 +73,7 @@ exports.enableTopicListener = function (req, res, next) {
 
         mqttClient.subscribe(topic, function (error, granted) {
             console.log('Topic', topic, 'on mqtt for client', clientSocketId);
-
+            res.send(JSON.stringify({mqttClientSubscribe: true}));
             mqttClient.on('message', function (topic, message) {                
                 var messageJson = JSON.parse(message.toString());                
                 io.to(clientSocketId).emit(webSocketEvent, messageJson);                
