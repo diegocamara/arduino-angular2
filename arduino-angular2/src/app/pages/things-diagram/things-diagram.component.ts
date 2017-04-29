@@ -1,8 +1,10 @@
 import { Router } from '@angular/router';
 import { Component, OnInit, ViewChild, ViewContainerRef, ElementRef, ComponentFactoryResolver, ComponentRef, ReflectiveInjector } from '@angular/core';
+import { Location } from '@angular/common'
 import * as cytoscape from 'cytoscape';
 import { MicroControllerService } from "app/services/micro-controller.service";
 import { DynamicComponent } from "app/pages/dynamic/dynamic.component";
+import { WebsocketService } from "app/services/websocket.service";
 
 declare var $: any;
 
@@ -21,7 +23,9 @@ export class ThingsDiagramComponent implements OnInit {
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
     private microControllerService: MicroControllerService,
-    private router: Router
+    private websocketService: WebsocketService,
+    private router: Router,
+    private location: Location
   ) {
   }
 
@@ -41,7 +45,18 @@ export class ThingsDiagramComponent implements OnInit {
 
     });
 
-    $('#node-modal').modal();
+    $('#node-modal').modal({
+      complete: () => {
+
+        this.microControllerService.disableTopicListener(this.websocketService.socket.io.engine.id).subscribe((response) => {
+
+          this.location.back();
+
+
+        });
+
+      }
+    });
 
   }
 
@@ -64,7 +79,7 @@ export class ThingsDiagramComponent implements OnInit {
       let nodeId = '#' + node.data.id;
 
       this.thingsDiagramContainer.on('click', nodeId, (e) => {
-                
+
         $('#node-modal').modal('open');
         this.router.navigate([node.componentPath, node.data.id.toString().toLowerCase()]);
 

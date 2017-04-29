@@ -82,6 +82,23 @@ export class MicroControllerService {
     });
   }
 
+  public disableTopicListener(clientSocketId: string): Observable<any> {
+    return new Observable((observer) => {
+
+      let url = 'disabletopiclistener';
+
+      let params: URLSearchParams = new URLSearchParams();      
+      params.set('clientSocketId', clientSocketId);     
+      
+      this.httpInterceptorService.get(url, { search: params }).subscribe((response) => {
+        observer.next(response);
+        observer.complete();
+
+      });
+
+    });
+  }
+
   public getDiagramNodes(): Observable<any> {
     return new Observable((observer) => {
 

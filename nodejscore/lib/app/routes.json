@@ -1,5 +1,6 @@
 {
     "GET_REGISTERED_TOPICS": "/getresgisteredtopics/",
     "GET_MICROCONTROLLER_INFO": "/getmicrocontrollerinfo/",
-    "ENABLE_TOPIC_LISTENER": "/enabletopiclistener/"
+    "ENABLE_TOPIC_LISTENER": "/enabletopiclistener/",
+    "DISABLE_TOPIC_LISTENER": "/disabletopiclistener/"
 }

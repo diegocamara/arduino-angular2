@@ -13,4 +13,7 @@ router.get(routes.GET_MICROCONTROLLER_INFO, mqttController.consultMicrocontrolle
 
 router.get(routes.ENABLE_TOPIC_LISTENER, mqttController.enableTopicListener);
 
+router.get(routes.DISABLE_TOPIC_LISTENER, mqttController.disableTopicListener);
+
+
 module.exports = router;
