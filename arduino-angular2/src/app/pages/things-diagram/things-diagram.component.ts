@@ -47,14 +47,9 @@ export class ThingsDiagramComponent implements OnInit {
 
     $('#node-modal').modal({
       complete: () => {
-
         this.microControllerService.disableTopicListener(this.websocketService.socket.io.engine.id).subscribe((response) => {
-
           this.location.back();
-
-
         });
-
       }
     });
 
