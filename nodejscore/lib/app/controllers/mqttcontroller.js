@@ -26,23 +26,28 @@ exports.mqttConnectInit = function (socketio, onMessageCallback) {
             var microcontrollerId = messageJson.id.split('.')[0];
 
             if (!componentsMap.hasOwnProperty(microcontrollerId)) {
+
                 componentsMap[microcontrollerId] = {
                     value: [messageJson]
                 };
+
             } else {
 
                 var moduleIndex = indexOfModule(messageJson.id, componentsMap[microcontrollerId].value);
 
                 if (moduleIndex == -1) {
                     componentsMap[microcontrollerId].value.push(messageJson);
+
                 } else {
                     componentsMap[microcontrollerId].value[moduleIndex] = messageJson;
                 }
 
             }
 
+            io.clients().emit('topicregistered', messageJson.id);
+
             onMessageCallback(componentsMap);
-           
+
         });
 
     });
@@ -53,7 +58,17 @@ exports.mqttConnectInit = function (socketio, onMessageCallback) {
 
 exports.consultRegisteredTopics = function (req, res, next) {
 
-    res.send(JSON.stringify(componentsMap));
+    var registeredComponents = [];
+
+    Object.keys(componentsMap).forEach(function (microcontroller, microcontrollerIndex, microcontrollers) {
+
+        componentsMap[microcontroller].value.forEach(function (component, componentIndex, components) {
+            registeredComponents.push(component.id);
+        });
+
+    });
+
+    res.send(JSON.stringify(registeredComponents));
 
 }
 
@@ -94,14 +109,14 @@ exports.disableTopicListener = function (req, res, next) {
     var clientSocketId = req.query.clientSocketId;
 
     closeMqttClientAndRemove(clientSocketId, function (isSuccess) {
-       
-        if(isSuccess){
+
+        if (isSuccess) {
             console.log('Mqtt for', clientSocketId, 'has been end.');
         }
         res.send(JSON.stringify({ mqttClientSubscribe: isSuccess }));
 
     });
-     
+
 
 }
 
@@ -119,11 +134,11 @@ function checkMqttClientsConnection() {
     var checkingInterval = 5000;
 
     setInterval(function () {
-        
+
         for (var mqttClientIndex = 0; mqttClientIndex < mqttClients.length; mqttClientIndex++) {
 
             if (mqttClients[mqttClientIndex].clientId != 'topicListener') {
-                
+
                 if (!io.clients().connected[mqttClients[mqttClientIndex].clientId]) {
                     var clientId = mqttClients[mqttClientIndex].clientId;
                     mqttClients[mqttClientIndex].mqttClient.end();

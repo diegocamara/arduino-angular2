@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 declare var io: any;
 
@@ -11,7 +12,7 @@ export class WebsocketService {
 
   constructor() {
 
-    this._socket = io('http://localhost:3000');
+    this._socket = io(environment.origin);
     
     this._socket.on('topicregistered', (data) => {
      

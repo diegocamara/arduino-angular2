@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { RequestOptions, RequestOptionsArgs, Response, Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { environment } from '../environments/environments';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class HttpInterceptorService {

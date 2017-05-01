@@ -12,33 +12,24 @@ export class BrokerTopicsComponent implements OnInit {
   topics: Array<any>;
 
   constructor(
-     private webSocketService: WebsocketService,
-     private brokerTopicsService: BrokerTopicsService
+    private webSocketService: WebsocketService,
+    private brokerTopicsService: BrokerTopicsService
   ) { }
 
   ngOnInit() {
 
-    this.brokerTopicsService.consultRegisteredTopics().subscribe((registeredTopics)=>{       
-      this.topics = this.componentsToArray(registeredTopics);
+    this.brokerTopicsService.consultRegisteredTopics().subscribe((registeredTopics) => {
+      this.topics = registeredTopics;
     });
 
-    this.webSocketService.on('onTopicRegistered', (topicData) => {
-      this.topics = this.componentsToArray(topicData);
+    this.webSocketService.on('onTopicRegistered', (topicData) => {     
+      
+      if(this.topics.indexOf(topicData) == -1){
+        this.topics.push(topicData);
+      }
+        
     });
 
   }
-
-  componentsToArray(topicData: any): Array<any> {
-
-    let topics = [];
-   
-    Object.keys(topicData).forEach(function (topic, topicIndex, topicsData) {       
-      topics.push(topicData[topic]);
-    });
-
-    return topics;
-
-  }
-  
 
 }

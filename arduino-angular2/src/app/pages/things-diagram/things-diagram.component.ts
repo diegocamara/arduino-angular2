@@ -62,7 +62,7 @@ export class ThingsDiagramComponent implements OnInit {
         nodes: nodes
       }
     });
-
+    this.thingsDiagramContainer.zoom(0.2);
     this.applyNodeRules(nodes);
 
   }
@@ -73,7 +73,7 @@ export class ThingsDiagramComponent implements OnInit {
 
       let nodeId = '#' + node.data.id;
 
-      this.thingsDiagramContainer.on('click', nodeId, (e) => {
+      this.thingsDiagramContainer.on('tap', nodeId, (e) => {
 
         $('#node-modal').modal('open');
         this.router.navigate([node.componentPath, node.data.id.toString().toLowerCase()]);
