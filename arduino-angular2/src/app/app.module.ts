@@ -17,6 +17,7 @@ import { BrokerTopicsService } from "app/services/broker-topics.service";
 import { DynamicComponent } from './pages/dynamic/dynamic.component';
 import { HtmlOutlet } from "app/directives/html-outlet";
 import { NodemcuComponent } from './pages/thingscontrollers/nodemcu/nodemcu.component';
+import { SpeechRecognitionService } from "app/services/speech-recognition.service";
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { NodemcuComponent } from './pages/thingscontrollers/nodemcu/nodemcu.comp
     MaterializeModule,
     routing
   ],
-  providers: [MicroControllerService, ComponentSensorService, WebsocketService, HttpInterceptorService, BrokerTopicsService],
+  providers: [MicroControllerService, ComponentSensorService, WebsocketService, HttpInterceptorService, BrokerTopicsService, SpeechRecognitionService],
   entryComponents:[DynamicComponent],
   bootstrap: [AppComponent]
 })
