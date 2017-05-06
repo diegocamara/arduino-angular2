@@ -3,7 +3,6 @@ import { Component, OnInit, ViewChild, ViewContainerRef, ElementRef, ComponentFa
 import { Location } from '@angular/common'
 import * as cytoscape from 'cytoscape';
 import { MicroControllerService } from "app/services/micro-controller.service";
-import { DynamicComponent } from "app/pages/dynamic/dynamic.component";
 import { WebsocketService } from "app/services/websocket.service";
 
 declare var $: any;
@@ -62,7 +61,7 @@ export class ThingsDiagramComponent implements OnInit {
         nodes: nodes
       }
     });
-    this.thingsDiagramContainer.zoom(0.2);
+    //this.thingsDiagramContainer.zoom(0.5);
     this.applyNodeRules(nodes);
 
   }
@@ -74,9 +73,10 @@ export class ThingsDiagramComponent implements OnInit {
       let nodeId = '#' + node.data.id;
 
       this.thingsDiagramContainer.on('tap', nodeId, (e) => {
-
-        $('#node-modal').modal('open');
-        this.router.navigate([node.componentPath, node.data.id.toString().toLowerCase()]);
+        if (node.componentPath) {
+          $('#node-modal').modal('open');
+          this.router.navigate([node.componentPath, node.data.id.toString().toLowerCase()]);
+        }
 
       });
 

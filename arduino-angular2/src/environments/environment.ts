@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  origin: 'http://192.168.25.10:3000/'
+  origin: 'http://192.168.1.4:3000/'
 };

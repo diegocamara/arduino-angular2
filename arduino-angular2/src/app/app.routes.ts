@@ -1,3 +1,4 @@
+import { RaspberrypiComponent } from './pages/thingscontrollers/raspberrypi/raspberrypi.component';
 import { Routes, RouterModule } from '@angular/router';
 import { IotDashboardComponent } from "app/pages/iot-dashboard/iot-dashboard.component";
 import { ModuleWithProviders } from "@angular/core";
@@ -17,7 +18,11 @@ const APP_ROUTES: Routes = [
                     {
                         path: 'nodemcu/:id',
                         component: NodemcuComponent
-                    }
+                    },
+                    {
+                        path: 'raspberrypi/:id',
+                        component: RaspberrypiComponent
+                    }                    
                 ]
             },
             {

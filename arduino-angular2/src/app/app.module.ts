@@ -14,10 +14,9 @@ import { WebsocketService } from 'app/services/websocket.service';
 import { BrokerTopicsComponent } from './pages/broker-topics/broker-topics.component';
 import { HttpInterceptorService } from "app/services/http-interceptor.service";
 import { BrokerTopicsService } from "app/services/broker-topics.service";
-import { DynamicComponent } from './pages/dynamic/dynamic.component';
-import { HtmlOutlet } from "app/directives/html-outlet";
 import { NodemcuComponent } from './pages/thingscontrollers/nodemcu/nodemcu.component';
 import { SpeechRecognitionService } from "app/services/speech-recognition.service";
+import { RaspberrypiComponent } from './pages/thingscontrollers/raspberrypi/raspberrypi.component';
 
 @NgModule({
   declarations: [
@@ -25,9 +24,8 @@ import { SpeechRecognitionService } from "app/services/speech-recognition.servic
     IotDashboardComponent,
     ThingsDiagramComponent,
     BrokerTopicsComponent,
-    DynamicComponent,
-    HtmlOutlet,
-    NodemcuComponent    
+    NodemcuComponent,
+    RaspberrypiComponent        
   ],
   imports: [
     BrowserModule,
@@ -37,7 +35,7 @@ import { SpeechRecognitionService } from "app/services/speech-recognition.servic
     routing
   ],
   providers: [MicroControllerService, ComponentSensorService, WebsocketService, HttpInterceptorService, BrokerTopicsService, SpeechRecognitionService],
-  entryComponents:[DynamicComponent],
+  entryComponents:[],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

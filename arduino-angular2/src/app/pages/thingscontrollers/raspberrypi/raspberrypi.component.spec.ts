@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DynamicComponent } from './dynamic.component';
+import { RaspberrypiComponent } from './raspberrypi.component';
 
-describe('DynamicComponent', () => {
-  let component: DynamicComponent;
-  let fixture: ComponentFixture<DynamicComponent>;
+describe('RaspberrypiComponent', () => {
+  let component: RaspberrypiComponent;
+  let fixture: ComponentFixture<RaspberrypiComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DynamicComponent ]
+      declarations: [ RaspberrypiComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DynamicComponent);
+    fixture = TestBed.createComponent(RaspberrypiComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

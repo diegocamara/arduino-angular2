@@ -105,7 +105,7 @@ export class MicroControllerService {
       let nodes = [];
 
       nodes = [{
-        data: { id: 'NodeMcu', info: {} },
+        data: { id: 'ESP8266-01', info: {} },
         componentPath: 'thingsDiagram/nodemcu',
         style: {
           'shape': 'rectangle',
@@ -116,7 +116,7 @@ export class MicroControllerService {
         }
       },
       {
-        data: { id: 'RaspberryPi' },
+        data: { id: 'RPI-01' },
         componentPath: 'thingsDiagram/raspberrypi',
         style: {
           'shape': 'rectangle',
@@ -140,14 +140,14 @@ export class MicroControllerService {
 
       let edges = [
         {
-          data: { id: 'NodeMcuToRaspberryPi_edge', source: 'NodeMcu', target: 'RaspberryPi' },
+          data: { id: 'NodeMcuToRaspberryPi_edge', source: 'ESP8266-01', target: 'RPI-01' },
           style: {
             'curve-style': 'bezier',
             'target-arrow-shape': 'triangle'
           }
         },
         {
-          data: { id: 'RaspberryPiToNodeMcu_edge', source: 'RaspberryPi', target: 'NodeMcu' },
+          data: { id: 'RaspberryPiToNodeMcu_edge', source: 'RPI-01', target: 'ESP8266-01' },
           style: {
             'curve-style': 'bezier',
             'target-arrow-shape': 'triangle'
