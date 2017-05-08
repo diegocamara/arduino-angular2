@@ -15,5 +15,7 @@ router.get(routes.ENABLE_TOPIC_LISTENER, mqttController.enableTopicListener);
 
 router.get(routes.DISABLE_TOPIC_LISTENER, mqttController.disableTopicListener);
 
+router.get(routes.CONSULT_MQTT_SERVER_CONNECTION_STATUS, mqttController.consultMqttServerConnectionStatus);
+
 
 module.exports = router;

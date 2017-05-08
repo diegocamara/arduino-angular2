@@ -1,6 +1,6 @@
 import { WebsocketService } from './websocket.service';
 import { Injectable } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { URLSearchParams, Response } from '@angular/http';
 import { ComponentSensorService } from "app/services/component-sensor.service";
 import { Observable } from "rxjs/Observable";
 import { HttpInterceptorService } from "app/services/http-interceptor.service";
@@ -37,7 +37,7 @@ export class MicroControllerService {
         let clientSocketId: string = this.websocketService.socket.io.engine.id;
         let webSocketEvent: string = 'microcontrollerupdate';
 
-        this.enableTopicListener(mqttTopic, clientSocketId, webSocketEvent).subscribe((response) => {
+        this.enableTopicListener(mqttTopic, clientSocketId, webSocketEvent).subscribe((response: Response) => {
 
           this.onSocket(webSocketEvent).subscribe((updatedInfo) => {
             observer.next(updatedInfo);
@@ -87,9 +87,9 @@ export class MicroControllerService {
 
       let url = 'disabletopiclistener';
 
-      let params: URLSearchParams = new URLSearchParams();      
-      params.set('clientSocketId', clientSocketId);     
-      
+      let params: URLSearchParams = new URLSearchParams();
+      params.set('clientSocketId', clientSocketId);
+
       this.httpInterceptorService.get(url, { search: params }).subscribe((response) => {
         observer.next(response);
         observer.complete();

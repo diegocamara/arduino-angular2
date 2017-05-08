@@ -1,0 +1,6 @@
+.online-mqtt-status{
+    color: #388e3c;
+}
+.offline-mqtt-status{
+    color: #e53935;
+}

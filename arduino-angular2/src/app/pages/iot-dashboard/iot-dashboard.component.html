@@ -1,24 +1,32 @@
 <nav class="light-blue darken-2">
   <div class="nav-wrapper">
-    <a href="#" class="brand-logo  center">Iot Hub</a>
-
+    <a href="#" class="brand-logo center">Iot Hub</a>
+    <ul class="right hide-on-med-and-down">
+      <li><a id="button-collapse" href="#" data-activates="slide-out"><i class="material-icons">menu</i></a></li>
+    </ul>
   </div>
 </nav>
 
-<div class="row" style="height:100%;">
-  <div class="col s12 m4 l3 " style="height:100%;">
-    <div class="card green lighten-1 waves-effect waves-light" style="width: 100%;" (click)="navigateTo('thingsDiagram')">
-      <div class="card-content white-text center">
-        <h4>Home Diagram</h4>
+<ul id="slide-out" class="side-nav">
+  <li>
+    <div class="row" style="height:100%;">
+      <div class="col" style="height:100%;">
+        <div class="card green lighten-1 waves-effect waves-light" style="width: 100%;" (click)="navigateTo('thingsDiagram')">
+          <div class="card-content white-text center">
+            <h4>Home Diagram</h4>
+          </div>
+        </div>
+        <div class="card cyan darken-3 waves-effect waves-light" style="width: 100%;" (click)="navigateTo('brokerTopics')">
+          <div class="card-content white-text center">
+            <h4>Broker Topics</h4>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="card cyan darken-3 waves-effect waves-light" style="width: 100%;" (click)="navigateTo('brokerTopics')">
-      <div class="card-content white-text center">
-        <h4>Broker Topics</h4>
-      </div>
-    </div>
-  </div>
-  <div class="col s12 m8 l9" style="height: 100%;">
-    <router-outlet></router-outlet>
-  </div>
+  </li>
+</ul>
+
+<div class="col s12 m8 l9" style="height: 100%;">
+  <h5>Mqtt server status: <span [ngClass]="{'online-mqtt-status': isMqttServerOnline(), 'offline-mqtt-status': !isMqttServerOnline()}" >{{mqttServerStatus}}</span></h5>
+  <router-outlet></router-outlet>
 </div>

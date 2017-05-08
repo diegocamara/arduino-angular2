@@ -1,8 +1,9 @@
 var mqtt = require('mqtt');
-var brokerUrl = 'mqtt://localhost';
+var brokerUrl = 'mqtt://10.42.0.1';
 var io;
 var componentsMap = {};
 var mqttClients = [];
+var mqttServerConnectionStatus = 'OFFLINE';
 
 exports.mqttConnectInit = function (socketio, onMessageCallback) {
 
@@ -12,6 +13,9 @@ exports.mqttConnectInit = function (socketio, onMessageCallback) {
 
     mqttClient.on('connect', function () {
         console.log('System connect to', brokerUrl);
+        console.log('Mqtt topic listener online, waiting for messages.');
+        mqttServerConnectionStatus = 'ONLINE';
+        io.clients().emit('mqttserverconnectionchange', mqttServerConnectionStatus);
         mqttClient.subscribe('#', function (err, granted) {
 
             addMqttClient(mqttClient, 'topicListener');
@@ -37,7 +41,6 @@ exports.mqttConnectInit = function (socketio, onMessageCallback) {
 
                 if (moduleIndex == -1) {
                     componentsMap[microcontrollerId].value.push(messageJson);
-
                 } else {
                     componentsMap[microcontrollerId].value[moduleIndex] = messageJson;
                 }
@@ -50,6 +53,19 @@ exports.mqttConnectInit = function (socketio, onMessageCallback) {
 
         });
 
+    });
+
+    mqttClient.on('error', function (error) {
+        console.log(error);
+    });
+
+    mqttClient.on('reconnect', function () {
+        console.log('Mqtt topic listener offline, trying to reconnect...');
+    });
+
+    mqttClient.on('close', function () {
+        mqttServerConnectionStatus = 'OFFLINE';
+        io.clients().emit('mqttserverconnectionchange', mqttServerConnectionStatus);
     });
 
     checkMqttClientsConnection();
@@ -86,17 +102,32 @@ exports.enableTopicListener = function (req, res, next) {
     var webSocketEvent = req.query.webSocketEvent;
 
     var mqttClient = new mqtt.connect(brokerUrl);
+    addMqttClient(mqttClient, clientSocketId);
+
+    var isResponseSend = false;
 
     mqttClient.on('connect', function () {
 
-        mqttClient.subscribe(topic, function (error, granted) {
-            addMqttClient(mqttClient, clientSocketId);
+        mqttClient.subscribe(topic, function (error, granted) {            
             console.log('Topic', topic, 'on mqtt for client', clientSocketId);
             res.send(JSON.stringify({ mqttClientSubscribe: true }));
+            isResponseSend = true;
             mqttClient.on('message', function (topic, message) {
                 var messageJson = JSON.parse(message.toString());
                 io.to(clientSocketId).emit(webSocketEvent, messageJson);
             });
+
+        });
+
+    });   
+
+    mqttClient.on('offline', function () {
+        
+        closeMqttClientAndRemove(clientSocketId, function (isSuccess) {
+            
+            if (!isResponseSend && isSuccess) {
+                res.send(JSON.stringify({ mqttClientSubscribe: false }));
+            }
 
         });
 
@@ -110,13 +141,16 @@ exports.disableTopicListener = function (req, res, next) {
 
     closeMqttClientAndRemove(clientSocketId, function (isSuccess) {
 
-        if (isSuccess) {
-            console.log('Mqtt for', clientSocketId, 'has been end.');
-        }
         res.send(JSON.stringify({ mqttClientSubscribe: isSuccess }));
 
     });
 
+
+}
+
+exports.consultMqttServerConnectionStatus = function (req, res, next) {
+
+    res.send(JSON.stringify(mqttServerConnectionStatus));
 
 }
 
@@ -155,21 +189,22 @@ function checkMqttClientsConnection() {
 
 function closeMqttClientAndRemove(clientId, callback) {
 
-    var selectedIndex;
+    var selectedIndex = null;
 
     for (var mqttClientIndex = 0; mqttClientIndex < mqttClients.length; mqttClientIndex++) {
-
-        if (mqttClients[mqttClientIndex].clientId == clientId) {
+            
+        if (mqttClients[mqttClientIndex].clientId == clientId) {            
             storedMqtt = mqttClients[mqttClientIndex];
             storedMqtt.mqttClient.end();
-            selectedIndex = mqttClientIndex;
+            selectedIndex = mqttClientIndex;            
             break;
         }
 
     }
 
-    if (selectedIndex) {
+    if (selectedIndex != null) {
         mqttClients.splice(selectedIndex, 1);
+        console.log('Mqtt for', clientId, 'has been end.');
         callback(true);
     } else {
         callback(false);
