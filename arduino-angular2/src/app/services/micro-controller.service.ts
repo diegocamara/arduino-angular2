@@ -100,6 +100,7 @@ export class MicroControllerService {
 
   public getDiagramNodes(): Observable<any> {
     return new Observable((observer) => {
+      
       let nodes = [];
 
       nodes = [{
