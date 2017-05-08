@@ -76,7 +76,6 @@ export class MicroControllerService {
       this.httpInterceptorService.get(url, { search: params }).subscribe((response) => {
         observer.next(response);
         observer.complete();
-
       });
 
     });
