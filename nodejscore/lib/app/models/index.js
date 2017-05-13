@@ -11,7 +11,7 @@ var mongooseUri = uriUtil.formatMongoose(mongodbUri);
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect(mongooseUri, config.options);
+//mongoose.connect(mongooseUri, config.options);
 
 var db = {};
 

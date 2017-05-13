@@ -2,5 +2,6 @@
     "GET_REGISTERED_TOPICS": "/getresgisteredtopics/",
     "GET_MICROCONTROLLER_INFO": "/getmicrocontrollerinfo/",
     "ENABLE_TOPIC_LISTENER": "/enabletopiclistener/",
-    "DISABLE_TOPIC_LISTENER": "/disabletopiclistener/"
+    "DISABLE_TOPIC_LISTENER": "/disabletopiclistener/",
+    "CONSULT_MQTT_SERVER_CONNECTION_STATUS": "/consultmqttserverconnectionstatus/"
 }

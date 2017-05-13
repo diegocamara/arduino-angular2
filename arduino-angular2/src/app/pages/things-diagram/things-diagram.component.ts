@@ -28,7 +28,7 @@ export class ThingsDiagramComponent implements OnInit {
   ) {
   }
 
-  ngOnInit() {
+  ngOnInit() {    
 
     this.microControllerService.getDiagramNodes().subscribe((nodes) => {
 
