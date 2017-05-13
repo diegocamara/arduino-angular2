@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  origin: 'http://localhost:3000/'  
+  origin: 'http://rpi.local:3000/'  
 };
