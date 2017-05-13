@@ -1,5 +1,5 @@
 var mqtt = require('mqtt');
-var brokerUrl = 'mqtt://10.42.0.1';
+var brokerUrl = 'mqtt://localhost';
 var io;
 var componentsMap = {};
 var mqttClients = [];
